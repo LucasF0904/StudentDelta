@@ -1,10 +1,32 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { FiArrowLeft } from "react-icons/fi";
+
+import api from "../../services/api";
+
 import "./styles.css";
+
 import logoImg from "../../assets/delta.jpg";
 
 export default function Register() {
+  const [name, setName] = useState("");
+  const [endereco, setEndereco] = useState("");
+  const [foto, setFoto] = useState("");
+  async function handleRegister(e) {
+    e.preventDefault();
+
+    const data = {
+      name,
+      endereco,
+      foto,
+    };
+    try {
+      const response = await api.post("students", data);
+      alert(`Cadastrado com sucesso ${response.data}`);
+    } catch (err) {
+      alert(`Erro ao registrar`);
+    }
+  }
   return (
     <div className="register-container">
       <div className="content">
@@ -18,9 +40,22 @@ export default function Register() {
           </Link>
         </section>
         <form>
-          <input placeholder="Nome" />
-          <input placeholder="Endereco" />
-          <input placeholder="Foto" />
+          <input
+            placeholder="Nome"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+          <input
+            placeholder="Endereco"
+            value={endereco}
+            onChange={(e) => setEndereco(e.target.value)}
+          />
+          <input
+            type="file"
+            placeholder="Foto"
+            value={foto}
+            onChange={(e) => setFoto(e.target.value)}
+          />
           <button className="button" type="submit">
             Cadastrar
           </button>

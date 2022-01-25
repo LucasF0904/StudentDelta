@@ -1,4 +1,4 @@
-import { Student } from "../../entities/User";
+import { Student } from "../../entities/Student";
 import { IStudentRepository } from "../IStudentRepository";
 
 export class PostgresStudentRepository implements IStudentRepository {
@@ -7,6 +7,11 @@ export class PostgresStudentRepository implements IStudentRepository {
     async findByName(nome: string): Promise<Student> {
         const student = this.students.find(student => student.nome === nome)
 
+        return student
+    }
+
+    async findAll(): Promise<Student> {
+        const student = this.students.find(student => student)
         return student
     }
 
